@@ -1,21 +1,17 @@
 <template>
-  <div id="app">
-  </div>
+    <LeftNavigation></LeftNavigation>
 </template>
 
 <script>
+import LeftNavigation from "@/components/LeftNavigation";
 export default {
   name: 'App',
+  components:{
+    LeftNavigation
+  }
 }
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+<style scoped>
+
 </style>
