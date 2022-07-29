@@ -1,13 +1,13 @@
 <template>
-    <LeftNavigation></LeftNavigation>
+    <RootBody></RootBody>
 </template>
 
 <script>
-import LeftNavigation from "@/components/LeftNavigation";
+import RootBody from "@/components/RootBody";
 export default {
   name: 'App',
   components:{
-    LeftNavigation
+    RootBody
   }
 }
 </script>

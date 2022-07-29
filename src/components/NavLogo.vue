@@ -1,12 +1,12 @@
 <template>
-  <div class="NavClassification-Container">
+  <div class="NavLogo-Container">
     <span :style="cssFont">{{ name }}</span>
   </div>
 </template>
 
 <script>
 export default {
-  name: "NavClassification",
+  name: "NavLogo",
   props: {
     name: {
       type: String,
@@ -27,7 +27,7 @@ export default {
 </script>
 
 <style scoped lang="less">
-.NavClassification-Container {
+.NavLogo-Container {
   background-color: #26252F;
   color: #FFC402;
   height: 50px;
@@ -43,7 +43,8 @@ export default {
     padding-right: 15px;
     font-family:PingFang SC,Lantinghei SC,Microsoft Yahei,Hiragino Sans GB,Microsoft Sans Serif,WenQuanYi Micro Hei,sans-serif;
     font-weight: 400;
-    color: white;
+    color: #FFC402;
+
   }
   :hover {
     color: black;
