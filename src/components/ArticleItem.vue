@@ -5,7 +5,7 @@
       <span>{{article.date}}</span>
       <span v-for="(item,i) in article.author" :key="i">{{item}}&nbsp;</span>
     </div>
-    <p>{{article.summary}}<button>阅读原文</button></p>
+    <p>{{article.summary}}<Button>阅读原文</Button></p>
     <div>
       <i>标签图标</i>
       <span v-for="(tag,i) in article.articleTag" :key="i">{{tag}},</span>
@@ -14,8 +14,10 @@
 </template>
 
 <script>
+import {Button} from "element-ui";
 export default {
   name: "ArticleItem",
+  components:{Button},
   props: {
     article:{
       type: Object,
