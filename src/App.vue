@@ -1,58 +1,57 @@
 <template>
   <el-container>
-    <el-aside width="200px">
+    <el-aside width="13%">
       <el-row class="tac">
         <el-col>
           <el-menu
               class="el-menu-vertical-demo"
               default-active="1"
-              background-color="#fff"
+              background-color="#E9EEF3"
               text-color="#000"
               active-text-color="rgb(97, 155, 111)"
               >
             <el-menu-item index="1">
-              <i class="el-icon-s-home"></i>
+              <span slot="title">最新文章</span>
             </el-menu-item>
             <el-menu-item index="2">
-              <span slot="title">导航二</span>
+              <span slot="title">文章存档</span>
             </el-menu-item>
             <el-menu-item index="3">
-              <span slot="title">导航二</span>
-            </el-menu-item>
-            <el-menu-item index="4">
-              <span slot="title">导航三</span>
-            </el-menu-item>
-            <el-menu-item index="5">
-              <span slot="title">导航四</span>
+              <span slot="title">关于我</span>
             </el-menu-item>
           </el-menu>
         </el-col>
       </el-row>
     </el-aside>
-    <el-main>Main</el-main>
+    <el-main>
+      <MainItemList></MainItemList>
+    </el-main>
   </el-container>
 </template>
 <script>
+import MainItemList from "@/components/MainItemList";
 export default {
   name: 'App',
+  components:{MainItemList}
 }
 </script>
 
 <style scoped>
 .el-aside {
-  background-color: #fff;
+  background-color: #E9EEF3;
   color: #333;
-  text-align: center;
+  text-align: right;
   line-height: 200px;
   width: 50px;
-  font-family: fantasy;
+  font-family:  "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
+  letter-spacing: 3px;
 }
 
 .el-main {
-  background-color: #E9EEF3;
+  background-color: #fff;
   color: #333;
-  text-align: center;
-  line-height: 160px;
+  text-align: left;
+  line-height: 15px;
 }
 
 body > .el-container {
@@ -65,4 +64,11 @@ body > .el-container {
 .el-menu-item:hover {
   background-color: rgb(139, 183, 151) !important;
 }
+/*.MainItemList-Container{*/
+/*  flex: auto;*/
+/*  box-sizing: inherit;*/
+/*  width:85%;*/
+/*  height: 100%;*/
+/*  margin: 10px;*/
+/*}*/
 </style>
