@@ -1,10 +1,7 @@
 <template>
   <section class="MainItemList-Container">
-    <el-breadcrumb separator-class="el-icon-arrow-right">
-      <el-breadcrumb-item>最新文章</el-breadcrumb-item>
-    </el-breadcrumb>
-    <ArticleCard></ArticleCard>
-    <ArticleCard></ArticleCard>
+    <el-page-header @back="goBack" content="最新文章" style="margin-bottom: 30px"></el-page-header>
+    <ArticleCard v-for="(item,index) in 3" :key="index"></ArticleCard>
   </section>
 </template>
 
@@ -12,13 +9,17 @@
 import ArticleCard from "@/components/ArticleCard";
 export default {
   name: "MainItemList",
-  components:{ArticleCard}
+  components:{ArticleCard},
+  methods: {
+    goBack() {
+      console.log('go back');
+    }
+  }
 }
 </script>
 
 <style scoped>
-
-.MainItemList-Container{
-
-}
+/*.el-page-header{*/
+/*  margin-bottom: 100px*/
+/*}*/
 </style>
