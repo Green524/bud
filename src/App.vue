@@ -1,4 +1,5 @@
 <template>
+  <div>
   <el-container>
     <el-aside width="13%">
       <el-row class="tac">
@@ -10,7 +11,7 @@
               text-color="#000"
               active-text-color="rgb(97, 155, 111)"
               :router="true"
-              >
+          >
             <el-menu-item index="/article/latest/">
               <span slot="title">最新文章</span>
             </el-menu-item>
@@ -24,31 +25,40 @@
         </el-col>
       </el-row>
     </el-aside>
-    <el-main>
+    <el-main class="goTop">
       <router-view>
       </router-view>
-<!--      <MainItemList></MainItemList>-->
+      <template>
+        <el-backtop target=".goTop" :right="40" :bottom="50"></el-backtop>
+      </template>
+      <template>
+          <Pagination></Pagination>
+      </template>
     </el-main>
   </el-container>
+  </div>
 </template>
 <script>
 // import MainItemList from "@/components/MainItemList";
+// import ArticleDetail from "@/components/ArticleDetail";
+import Pagination from "@/components/Pagination";
 export default {
   name: 'App',
-  // components:{MainItemList}
+  components:{Pagination}
 }
 </script>
 
-<style scoped>
+<style scoped lang="less">
 .el-aside {
   background-color: #E9EEF3;
   color: #333;
   text-align: right;
   line-height: 200px;
   width: 50px;
-  font-family:  "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
+  font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
   letter-spacing: 3px;
   margin-right: 10px;
+  overflow: visible;
 }
 
 .el-main {
@@ -56,19 +66,25 @@ export default {
   color: #333;
   text-align: left;
   line-height: 15px;
+  overflow: visible;
 }
-
-body > .el-container {
-  margin-bottom: 40px;
-  height: 100%;
-}
-.el-submenu__title:hover{
+.el-submenu__title:hover {
   background-color: rgb(97, 155, 111) !important;
 }
+
 .el-menu-item:hover {
   background-color: rgb(139, 183, 151) !important;
 }
-.MainItemList-Container{
+
+.MainItemList-Container {
   float: left;
+}
+
+.goTop {
+  height: 100vh;
+  overflow-x: hidden;
+}
+.el-backtop{
+  color: rgb(97, 155, 111);
 }
 </style>

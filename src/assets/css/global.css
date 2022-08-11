@@ -3,3 +3,16 @@ html, body, #app {
     margin: 0;
     padding: 0;
 }
+.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
+    font-family: PingFang SC, Verdana, Helvetica Neue, Microsoft Yahei, Hiragino Sans GB, Microsoft Sans Serif, WenQuanYi Micro Hei, sans-serif;
+    font-weight: 500;
+    line-height: 1.1;
+}
+.el-page-header{
+    padding: 1rem;
+    border-bottom: 1px solid #eee;
+    background: #fff;
+    border-radius: 4px;
+    -webkit-box-shadow: 0 1px 1px rgba(0,0,0,.05);
+    box-shadow: 0 1px 1px rgba(0,0,0,.05);
+}

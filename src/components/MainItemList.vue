@@ -1,7 +1,7 @@
 <template>
   <section class="MainItemList-Container">
     <el-page-header @back="goBack" content="最新文章" style="margin-bottom: 30px"></el-page-header>
-    <ArticleCard v-for="(item,index) in 3" :key="index"></ArticleCard>
+    <ArticleCard v-for="(item,index) in 17" :key="index"></ArticleCard>
   </section>
 </template>
 

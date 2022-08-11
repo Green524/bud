@@ -1,5 +1,8 @@
 import MainItemList from "@/components/MainItemList";
 import VueRouter from "vue-router";
+import ArticleDetail from "@/components/ArticleDetail";
+import ArticleArchive from "@/components/ArticleArchive";
+import AboutMe from "@/components/AboutMe";
 
 const routes = [
     {
@@ -10,17 +13,17 @@ const routes = [
     {
         path: '/article/archive/',
         name: 'archive',
-        component: MainItemList,
+        component: ArticleArchive,
     },
     {
         path: '/about',
         name: 'aboutme',
-        component: MainItemList,
+        component: AboutMe,
     },
     {
         path: '/article/detail',
         name: 'articledetail',
-        component: MainItemList,
+        component: ArticleDetail,
     }
 ]
 const router = new VueRouter({
