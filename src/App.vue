@@ -6,16 +6,17 @@
         <el-col>
           <el-menu
               class="el-menu-vertical-demo"
-              default-active="/article/latest/"
+              :default-active="`/article/latest`"
+              default-openeds=""
               background-color="#E9EEF3"
               text-color="#000"
               active-text-color="rgb(97, 155, 111)"
               :router="true"
           >
-            <el-menu-item index="/article/latest/">
+            <el-menu-item index="/article/latest">
               <span slot="title">最新文章</span>
             </el-menu-item>
-            <el-menu-item index="/article/archive/">
+            <el-menu-item index="/article/archive">
               <span slot="title">文章存档</span>
             </el-menu-item>
             <el-menu-item index="/about">

@@ -11,6 +11,11 @@ const routes = [
         component: MainItemList,
     },
     {
+        path: '/',
+        name: 'home',
+        component: MainItemList,
+    },
+    {
         path: '/article/archive/',
         name: 'archive',
         component: ArticleArchive,
