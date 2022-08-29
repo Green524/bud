@@ -1,6 +1,6 @@
 <template>
   <section class="AboutMe-Container">
-    <el-page-header @back="goBack" content="关于我" style="margin-bottom: 30px;"></el-page-header>
+    <el-page-header @back="$router.back()" content="关于我" style="margin-bottom: 30px;"></el-page-header>
     <div class="aboutme-content">
         fjdksfjksd jksdkf sjfksdjf ksdjkf jk
     </div>
@@ -14,11 +14,6 @@ export default {
     return {
       currentDate: new Date()
     };
-  },
-  methods: {
-    goBack() {
-      console.log('go back');
-    }
   }
 }
 </script>

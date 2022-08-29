@@ -3,7 +3,7 @@
       <el-pagination
           :background="true"
           layout="prev, pager, next"
-          :total="1000">
+          :total="total" :current-page="pageNum" :page-size="pageSize">
       </el-pagination>
     </div>
 </template>
@@ -11,12 +11,29 @@
 <script>
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
-  name: "Pagination"
+  name: "Pagination",
+  props:{
+    total:{
+      type:Number,
+      require:true
+    },
+    pageNum:{
+      type:Number,
+      require: true,
+    },
+    pageSize:{
+      type:Number,
+      require: true,
+    }
+  }
 }
 </script>
 <style lang="less">
 .el-pagination{
   text-align: center;
+  position: relative;
+  bottom: 50px;
+  //float: left;
 }
 //.el-pagination.is-background .el-pager li {
 //  /*对页数的样式进行修改*/

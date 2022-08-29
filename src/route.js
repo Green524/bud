@@ -21,12 +21,12 @@ const routes = [
         component: ArticleArchive,
     },
     {
-        path: '/about',
+        path: '/about/',
         name: 'aboutme',
         component: AboutMe,
     },
     {
-        path: '/article/detail',
+        path: '/article/detail/:id',
         name: 'articledetail',
         component: ArticleDetail,
     }

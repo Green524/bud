@@ -1,6 +1,6 @@
 <template>
   <section class="ArticleArchive-Container">
-    <el-page-header @back="goBack" content="文章归档" style="margin-bottom: 30px"></el-page-header>
+    <el-page-header @back="$router.back()" content="文章归档" style="margin-bottom: 30px"></el-page-header>
     <div>
       <span>切换年份：</span>
       <a href="#">2019年</a>
@@ -26,11 +26,6 @@
 <script>
 export default {
   name: "ArticleArchive",
-  methods: {
-    goBack() {
-      console.log('go back');
-    }
-  },
   data() {
     return {
       items: [

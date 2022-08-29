@@ -31,21 +31,13 @@
         <template>
           <el-backtop target=".goTop" :right="40" :bottom="50"></el-backtop>
         </template>
-        <template>
-          <Pagination/>
-        </template>
       </el-main>
     </el-container>
   </div>
 </template>
 <script>
-// import MainItemList from "@/components/MainItemList";
-// import ArticleDetail from "@/components/ArticleDetail";
-import Pagination from "@/components/Pagination";
-
 export default {
   name: 'App',
-  components: {Pagination}
 }
 </script>
 

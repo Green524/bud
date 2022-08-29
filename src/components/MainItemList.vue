@@ -1,43 +1,48 @@
 <template>
   <section class="MainItemList-Container">
-    <el-page-header @back="goBack" content="最新文章" style="margin-bottom: 30px"></el-page-header>
-    <ArticleCard v-for="(item,index) in 17" :key="index"></ArticleCard>
+    <el-page-header @back="$router.back()" content="最新文章" style="margin-bottom: 30px"></el-page-header>
+    <ArticleCard v-for="(item,index) in latestArticles.list" :key="index" :article="item"></ArticleCard>
+<!--    <template>-->
+<!--      <Pagination :total="latestArticles.size" :pageNum="latestArticles.pageNum" :pageSize="latestArticles.pageSize"/>-->
 
-    <el-button @click="getArticlePage">点击</el-button>
+<!--    </template>-->
   </section>
 </template>
 
 <script>
 import ArticleCard from "@/components/ArticleCard";
+// import Pagination from "@/components/Pagination";
 
-// const getArticlePageParams = {
-//   pageNum: 1,
-//   pageSize: 1
-// }
-// function getArticlePageParams() {
-//   return {
-//     pageNum: 1,
-//     pageSize: 1
-//   };
-// }
 export default {
   name: "MainItemList",
   components: {ArticleCard},
+  mounted() {
+    this.getArticlePage();
+  },
+  data() {
+    return {
+      latestArticles: {}
+    }
+  },
   methods: {
     goBack() {
       console.log('go back');
     },
     getArticlePage() {
-      return this.$http.get(
+      this.$http.get(
           'http://localhost:8842/blog/query/page', {
-            params:{ pageNum: 1, pageSize: 1}
+            params: {pageNum: 1, pageSize: 100}
           }).then(function (success) {
-        console.log('请求成功' + success.text());
+        if (success.body['code'] === 500) {
+          //console.log(success.body['message']);
+        } else {
+          this.latestArticles = success.body.data;
+        }
       }, function (error) {
         console.log('请求失败' + error.text);
-      });
+      })
     }
-  }
+  },
 }
 </script>
 
