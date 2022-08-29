@@ -19,7 +19,7 @@
       </div>
     </div>
     <div>
-      <p v-html="article.content">{{ article.content }}</p>
+      <p v-html="article.content" class="markdown-body"></p>
     </div>
     <div>
       <comment :commentList="commentList" :commentNum="commentList.length"></comment>
@@ -29,6 +29,7 @@
 
 <script>
 import comment from 'bright-comment';
+import 'github-markdown-css'
 
 export default {
   name: "ArticleDetail",
