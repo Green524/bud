@@ -4,7 +4,7 @@ import VueRouter from "vue-router";
 import ElementUI from "element-ui";
 import router from "@/route";
 import VueResourceEsm from "vue-resource";
-import { DropdownMenu, DropdownItem } from 'vant';
+import { DropdownMenu, DropdownItem,Cell } from 'vant';
 
 import 'element-ui/lib/theme-chalk/index.css';
 import 'vant/lib/index.css';
@@ -16,6 +16,7 @@ Vue.use(VueRouter);
 Vue.use(VueResourceEsm);
 Vue.use(DropdownMenu);
 Vue.use(DropdownItem);
+Vue.use(Cell);
 
 const vm = new Vue({
     router,

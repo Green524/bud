@@ -15,7 +15,7 @@
         </div>
       </div>
     </div>
-      <p>Kafka在美团数据平台承担着统一的数据缓存和分发的角色，随着数据量的增长，集群规模的扩大，Kafka面临的挑战也愈发严峻。本文分享了美团Kafka面临的实际挑战，以及美团针对性的一些优化工作，希望能给从事相关开发工作的同学带来帮助或启发</p>
+      <p class="summary">Kafka在美团数据平台承担着统一的数据缓存和分发的角色，随着数据量的增长，集群规模的扩大，Kafka面临的挑战也愈发严峻。本文分享了美团Kafka面临的实际挑战，以及美团针对性的一些优化工作，希望能给从事相关开发工作的同学带来帮助或启发</p>
       <router-link :to="`/article/detail/` + article.id">
         <el-button type="success">阅读原文</el-button>
       </router-link>
@@ -85,6 +85,9 @@ export default {
     width: 100%;
     float: left;
     font-family: PingFang SC,Lantinghei SC,Microsoft Yahei,Hiragino Sans GB,Microsoft Sans Serif,WenQuanYi Micro Hei,sans-serif;
+  }
+  .summary{
+    line-height: 25px;
   }
 }
 </style>
