@@ -1,5 +1,10 @@
 <template>
   <div>
+    <el-container class="el-header-container">
+      <el-header>
+        <MobileNav></MobileNav>
+      </el-header>
+    </el-container>
     <el-container>
       <el-aside width="13%">
         <el-row class="tac">
@@ -36,12 +41,19 @@
   </div>
 </template>
 <script>
+import MobileNav from "@/components/MobileNav";
 export default {
   name: 'App',
+  components:{MobileNav}
 }
 </script>
 
 <style scoped lang="less">
+.el-header-container{
+  width: 0;
+  height: 0;
+}
+
 .el-aside {
   background-color: #E9EEF3;
   color: #333;
@@ -81,5 +93,31 @@ export default {
 
 .el-backtop {
   color: rgb(97, 155, 111);
+}
+
+.MobileNav-Container{
+  width: inherit;
+  height: 100%;
+}
+@media screen and (max-width: 850px) {
+  .el-aside{
+    visibility: hidden;
+    margin-right: 0;
+    width: 0 !important;
+  }
+  .el-header{
+    background-color: rgb(139, 183, 151);
+    color: #333;
+    line-height: 60px;
+    text-align: left;
+    width: 100%;
+    padding: 0;
+  }
+  .el-header-container{
+    height: 48px;
+    width: 100%;
+    background-color: #E9EEF3;
+
+  }
 }
 </style>

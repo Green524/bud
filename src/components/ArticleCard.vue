@@ -77,4 +77,14 @@ export default {
     border-color: rgb(97, 155, 111);
   }
 }
+
+@media screen and (max-width: 850px) {
+  .ArticleCard-Container{
+    margin-right: 20px;
+    margin-bottom: 20px;
+    width: 100%;
+    float: left;
+    font-family: PingFang SC,Lantinghei SC,Microsoft Yahei,Hiragino Sans GB,Microsoft Sans Serif,WenQuanYi Micro Hei,sans-serif;
+  }
+}
 </style>
