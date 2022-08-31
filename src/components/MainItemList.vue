@@ -2,6 +2,8 @@
   <section class="MainItemList-Container">
     <el-page-header @back="$router.back()" content="最新文章" style="margin-bottom: 30px"></el-page-header>
     <ArticleCard v-for="(item,index) in latestArticles.list" :key="index" :article="item"></ArticleCard>
+
+
     <!--    <template>-->
     <!--      <Pagination :total="latestArticles.size" :pageNum="latestArticles.pageNum" :pageSize="latestArticles.pageSize"/>-->
 

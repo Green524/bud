@@ -11,7 +11,7 @@
 
       <div class="detail-desc-i">
         <i class="el-icon-document card-icon"></i>
-        <span>11421字</span>
+        <span>{{article.wordCount}}字</span>
       </div>
       <div class="detail-desc-i">
         <i class="el-icon-alarm-clock card-icon"></i>
@@ -21,7 +21,11 @@
     <div>
       <p v-html="article.content" class="markdown-body"></p>
     </div>
-    <div>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <div v-if="article.isComment">
       <comment :commentList="commentList" :commentNum="commentList.length"></comment>
     </div>
   </section>
@@ -36,12 +40,26 @@ export default {
   components: {comment},
   mounted() {
     this.articleId = this.$route.params.id;
-    this.get();
+    this.getArticleDetail();
+    this.getComment();
   },
   methods: {
-    get() {
+    getArticleDetail() {
       this.$http.get('http://localhost:8842/blog/query/' + this.articleId).then(function (success) {
         this.article = success.body.data;
+      }, function (error) {
+        console.log('请求失败' + error.text);
+      });
+    },
+
+    getComment() {
+      this.$http.get('http://localhost:8842/comment/get/byarticleid',{
+        params:{
+          articleId:this.articleId
+        }
+      }).then(function (success) {
+        console.log(success)
+        // this.comment = success.body.data.list;
       }, function (error) {
         console.log('请求失败' + error.text);
       });
@@ -49,11 +67,11 @@ export default {
   },
   data() {
     return {
-      articleId: 0,
       article: {},
+      // commentList:[],
       commentList: [
         {
-          id: 1,
+          id: "1",
           commentUser: {
             id: 1,
             nickName: "花非花",
@@ -71,7 +89,18 @@ export default {
             },
             content: "真的就很棒！很Nice!",
             createDate: "2019-9-23 17:45:26"
-          }]
+          },
+            {
+              id: 2,
+              commentUser: {id: 2, nickName: "坏菠萝", avatar: ""},
+              targetUser: {
+                id: 1,
+                nickName: "花非花",
+                avatar: "http://qzapp.qlogo.cn/qzapp/101483738/6637A2B6611592A44A7699D14E13F7F7/50"
+              },
+              content: "真的就很棒！很Nice!",
+              createDate: "2019-9-23 17:45:26"
+            }]
         }
       ]
     }
