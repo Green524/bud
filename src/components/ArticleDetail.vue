@@ -11,7 +11,7 @@
 
       <div class="detail-desc-i">
         <i class="el-icon-document card-icon"></i>
-        <span>{{article.wordCount}}字</span>
+        <span>{{ article.wordCount }}字</span>
       </div>
       <div class="detail-desc-i">
         <i class="el-icon-alarm-clock card-icon"></i>
@@ -25,8 +25,11 @@
     <br/>
     <br/>
     <br/>
-    <div v-if="article.isComment">
-      <comment :commentList="commentList" :commentNum="commentList.length"></comment>
+    <div v-if="article.isComment" style="width: 80%">
+      <el-input type="text" placeholder="Github用户名(用于获取头像)" v-model="commenterText"/>
+      <el-input type="text" placeholder="你的邮箱(方便我联系你)" v-model="commenterEmailText" :change="inputPattern()"/>
+      <comment :commentList=commentList :commentNum=commentList.length commentWidth=100% @doSend="doSend"
+               @doChidSend="doChidSend"/>
     </div>
   </section>
 </template>
@@ -53,62 +56,76 @@ export default {
     },
 
     getComment() {
-      this.$http.get('http://localhost:8842/comment/get/byarticleid',{
-        params:{
-          articleId:this.articleId
+      this.$http.get('http://localhost:8842/comment/v2/get/byarticleid', {
+        params: {
+          articleId: this.articleId
         }
       }).then(function (success) {
-        console.log(success)
-        // this.comment = success.body.data.list;
+        this.commentList = success.body.data.list;
       }, function (error) {
         console.log('请求失败' + error.text);
       });
+    },
+    doSend(text) {
+      this.$http.post('http://localhost:8842/comment/add', {
+        articleId: this.articleId,
+        parentId: 0,
+        commenter: this.commenterText,
+        commenterEmail: this.commenterEmailText,
+        comment: text
+      }).then(function (success) {
+        if (success.body.code == 200) {
+          this.getComment();
+        }
+      }, function (error) {
+        console.log('请求失败' + error.text);
+      });
+    },
+    doChidSend(text, targetUserId, parentId) {
+      console.log(text)
+      console.log(targetUserId)
+      console.log(parentId)
+      this.$http.post('http://localhost:8842/comment/add', {
+        articleId: this.articleId,
+        parentId: targetUserId,
+        commenter: this.commenterText,
+        commenterEmail: this.commenterEmailText,
+        comment: text
+      }).then(function (success) {
+        console.log(success)
+        if (success.body.code == 200) {
+          this.getComment();
+        }
+      }, function (error) {
+        console.log('请求失败' + error.text);
+      });
+    },
+    inputPattern() {
+      const isMatch = this.emailReg.test(this.commenterEmailText);
+      console.log(isMatch)
+      if (!isMatch) {
+        this.$message('这是一条消息提示');
+      }
     }
   },
   data() {
     return {
+      emailReg: /[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?/,
       article: {},
-      // commentList:[],
-      commentList: [
-        {
-          id: "1",
-          commentUser: {
-            id: 1,
-            nickName: "花非花",
-            avatar: "http://qzapp.qlogo.cn/qzapp/101483738/6637A2B6611592A44A7699D14E13F7F7/50"
-          },
-          content: "<a style='text-decoration:none;color: #409eff ' href='https://blog.csdn.net/qq_40942490?spm=1000.2115.3001.5113'>我的CSDN博客地址</a>[害羞][害羞][哈哈]<br/>",
-          createDate: "2019-9-23 17:36:02",
-          childrenList: [{
-            id: 2,
-            commentUser: {id: 2, nickName: "坏菠萝", avatar: ""},
-            targetUser: {
-              id: 1,
-              nickName: "花非花",
-              avatar: "http://qzapp.qlogo.cn/qzapp/101483738/6637A2B6611592A44A7699D14E13F7F7/50"
-            },
-            content: "真的就很棒！很Nice!",
-            createDate: "2019-9-23 17:45:26"
-          },
-            {
-              id: 2,
-              commentUser: {id: 2, nickName: "坏菠萝", avatar: ""},
-              targetUser: {
-                id: 1,
-                nickName: "花非花",
-                avatar: "http://qzapp.qlogo.cn/qzapp/101483738/6637A2B6611592A44A7699D14E13F7F7/50"
-              },
-              content: "真的就很棒！很Nice!",
-              createDate: "2019-9-23 17:45:26"
-            }]
-        }
-      ]
+      commentList: [],
+      commenterText: 'chenum',
+      commenterEmailText: '1@123.com'
     }
   }
 }
 </script>
 
 <style scoped lang="less">
+.el-input {
+  display: block;
+  margin-bottom: 10px;
+}
+
 .detail-desc-i {
   display: inline;
   margin-right: 10px;
