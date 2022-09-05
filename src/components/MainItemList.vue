@@ -1,8 +1,8 @@
 <template>
   <section class="MainItemList-Container">
     <el-page-header @back="$router.back()" content="最新文章" style="margin-bottom: 30px"></el-page-header>
-    <ArticleCard v-for="(item,index) in latestArticles.list" :key="index" :article="item"></ArticleCard>
-
+    <ArticleCard v-for="(item,index) in appendLatestArticles" :key="index" :article="item"></ArticleCard>
+    <el-button @click="loadMore" :disabled="this.loadMoreSwitch === false" style="display: block">查看更多</el-button>
 
     <!--    <template>-->
     <!--      <Pagination :total="latestArticles.size" :pageNum="latestArticles.pageNum" :pageSize="latestArticles.pageSize"/>-->
@@ -18,14 +18,17 @@ import load from "@/load";
 
 export default {
   name: "MainItemList",
-  // eslint-disable-next-line vue/no-unused-components
   components: {ArticleCard},
   mounted() {
     this.getArticlePage();
   },
   data() {
     return {
-      latestArticles: {}
+      latestArticles: [],
+      appendLatestArticles:[],
+      pageNum: 1,
+      pageSize: 20,
+      loadMoreSwitch:true
     }
   },
   methods: {
@@ -33,20 +36,31 @@ export default {
       load.openLoading();
       this.$http.get(
           'http://localhost:8842/blog/query/page', {
-            params: {pageNum: 1, pageSize: 100}
+            params: {pageNum: this.pageNum, pageSize: this.pageSize}
           }).then(function (success) {
 
         load.closeLoading();
 
         if (success.body['code'] === 500) {
-          //
+          this.$message('获取文章失败');
         } else {
-          this.latestArticles = success.body.data;
+          this.latestArticles = success.body.data.list;
+          this.appendLatestArticles = this.appendLatestArticles.concat(this.latestArticles);
         }
-      }, function (error) {
-
-        console.log('请求失败' + error.text);
+      }, function () {
+        this.$message('获取文章失败');
       })
+    },
+    loadMore() {
+      const vm = this;
+      this.pageNum++;
+      this.getArticlePage();
+      setTimeout(function () {
+        if (vm.latestArticles.length === 0) {
+          vm.loadMoreSwitch = false;
+          vm.$message('无更多文章');
+        }
+      }, 500)
     }
   },
 }

@@ -29,7 +29,9 @@
       <el-input type="text" placeholder="Github用户名(用于获取头像)" v-model="commenterText"/>
       <el-input type="text" placeholder="你的邮箱(方便我联系你)" v-model="commenterEmailText" :change="inputPattern()"/>
       <comment :commentList=appendCommentList :commentNum=appendCommentList.length commentWidth=100% @doSend="doSend"
-               @doChidSend="doChidSend"/>
+               @doChidSend="doChidSend" label="游客"/>
+      <el-button @click="loadMore" :disabled="this.loadMoreSwitch === false">加载更多</el-button>
+
     </div>
   </section>
 </template>
@@ -46,10 +48,6 @@ export default {
     this.getArticleDetail();
     this.getComment();
     this.appendCommentList = this.appendCommentList.concat(this.commentList);
-    const scrollview = this.$refs['goTop']
-    // 添加滚动监听，该滚动监听了拖拽滚动条
-    // 尾部的 true 最好加上，我这边测试没加 true ，拖拽滚动条无法监听到滚动，加上则可以监听到拖拽滚动条滚动回调
-    scrollview.addEventListener('scroll', this.scroll, true)
   },
   methods: {
     getArticleDetail() {
@@ -70,6 +68,7 @@ export default {
       }).then(function (success) {
         this.commentList = success.body.data.list;
         this.appendCommentList = this.appendCommentList.concat(this.commentList);
+        this.commentTotal = success.body.data.total;
       }, function (error) {
         console.log('请求失败' + error.text);
       });
@@ -108,23 +107,20 @@ export default {
     },
     inputPattern() {
       const isMatch = this.emailReg.test(this.commenterEmailText);
-      console.log(isMatch)
       if (!isMatch) {
         this.$message('这是一条消息提示');
       }
     },
-    scroll() {
-      //变量scrollTop是滚动条滚动时，距离顶部的距离
-      let scrollTop = document.documentElement.scrollTop||document.body.scrollTop;
-      console.log(scrollTop)
-      //变量windowHeight是可视区的高度
-      let windowHeight = document.documentElement.clientHeight || document.body.clientHeight;
-      //变量scrollHeight是滚动条的总高度
-      let scrollHeight = document.documentElement.scrollHeight||document.body.scrollHeight;
-      //滚动条到底部的条件
-      if(scrollTop+windowHeight == scrollHeight){
-        //你想做的事情
-      }
+    loadMore() {
+      const vm = this;
+      this.pageNum++;
+      this.getComment();
+      setTimeout(function () {
+        if (vm.commentList.length === 0) {
+          vm.loadMoreSwitch = false;
+          vm.$message('无更多评论');
+        }
+      }, 500)
     }
   },
   data() {
@@ -136,7 +132,9 @@ export default {
       commenterText: 'chenum',
       commenterEmailText: '1@123.com',
       pageNum: 1,
-      pageSize: 1
+      pageSize: 1,
+      commentTotal: 0,
+      loadMoreSwitch: true
     }
   }
 }
