@@ -28,7 +28,7 @@
     <div v-if="article.isComment" style="width: 80%">
       <el-input type="text" placeholder="Github用户名(用于获取头像)" v-model="commenterText"/>
       <el-input type="text" placeholder="你的邮箱(方便我联系你)" v-model="commenterEmailText" :change="inputPattern()"/>
-      <comment :commentList=commentList :commentNum=commentList.length commentWidth=100% @doSend="doSend"
+      <comment :commentList=appendCommentList :commentNum=appendCommentList.length commentWidth=100% @doSend="doSend"
                @doChidSend="doChidSend"/>
     </div>
   </section>
@@ -45,6 +45,11 @@ export default {
     this.articleId = this.$route.params.id;
     this.getArticleDetail();
     this.getComment();
+    this.appendCommentList = this.appendCommentList.concat(this.commentList);
+    const scrollview = this.$refs['goTop']
+    // 添加滚动监听，该滚动监听了拖拽滚动条
+    // 尾部的 true 最好加上，我这边测试没加 true ，拖拽滚动条无法监听到滚动，加上则可以监听到拖拽滚动条滚动回调
+    scrollview.addEventListener('scroll', this.scroll, true)
   },
   methods: {
     getArticleDetail() {
@@ -56,12 +61,15 @@ export default {
     },
 
     getComment() {
-      this.$http.get('http://localhost:8842/comment/v2/get/byarticleid', {
+      this.$http.get('http://localhost:8842/comment/get/byarticleid', {
         params: {
-          articleId: this.articleId
+          articleId: this.articleId,
+          pageNum: this.pageNum,
+          pageSize: this.pageSize
         }
       }).then(function (success) {
         this.commentList = success.body.data.list;
+        this.appendCommentList = this.appendCommentList.concat(this.commentList);
       }, function (error) {
         console.log('请求失败' + error.text);
       });
@@ -82,15 +90,13 @@ export default {
       });
     },
     doChidSend(text, targetUserId, parentId) {
-      console.log(text)
-      console.log(targetUserId)
-      console.log(parentId)
       this.$http.post('http://localhost:8842/comment/add', {
         articleId: this.articleId,
         parentId: targetUserId,
         commenter: this.commenterText,
         commenterEmail: this.commenterEmailText,
-        comment: text
+        comment: text,
+        ext1: parentId
       }).then(function (success) {
         console.log(success)
         if (success.body.code == 200) {
@@ -106,6 +112,19 @@ export default {
       if (!isMatch) {
         this.$message('这是一条消息提示');
       }
+    },
+    scroll() {
+      //变量scrollTop是滚动条滚动时，距离顶部的距离
+      let scrollTop = document.documentElement.scrollTop||document.body.scrollTop;
+      console.log(scrollTop)
+      //变量windowHeight是可视区的高度
+      let windowHeight = document.documentElement.clientHeight || document.body.clientHeight;
+      //变量scrollHeight是滚动条的总高度
+      let scrollHeight = document.documentElement.scrollHeight||document.body.scrollHeight;
+      //滚动条到底部的条件
+      if(scrollTop+windowHeight == scrollHeight){
+        //你想做的事情
+      }
     }
   },
   data() {
@@ -113,8 +132,11 @@ export default {
       emailReg: /[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?/,
       article: {},
       commentList: [],
+      appendCommentList: [],
       commenterText: 'chenum',
-      commenterEmailText: '1@123.com'
+      commenterEmailText: '1@123.com',
+      pageNum: 1,
+      pageSize: 1
     }
   }
 }
