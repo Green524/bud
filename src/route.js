@@ -9,6 +9,12 @@ const routes = [
         path: '/article/latest/',
         name: 'latest',
         component: MainItemList,
+        children:[
+            {
+                path: ':tag/:pageName',
+                name: 'latest-tag',
+            }
+        ]
     },
     {
         path: '/',
@@ -27,7 +33,7 @@ const routes = [
     },
     {
         path: '/article/detail/:id',
-        name: 'articledetail',
+        name: 'article-detail',
         component: ArticleDetail,
     }
 ]

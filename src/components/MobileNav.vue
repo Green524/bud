@@ -22,11 +22,6 @@ export default {
         {text: '关于我', value: '/about/'},
       ]
     }
-  },
-  methods: {
-    router() {
-      this.$router.replace("/11")
-    }
   }
 }
 </script>

@@ -8,18 +8,22 @@
         <div>
           <i class="el-icon-date card-icon"></i>
           <span style="margin-right: 2em">{{ article.createTime }}</span>
-          <span>{{getAuthor(article.author)}}</span>
+          <span>{{ getAuthor(article.author) }}</span>
         </div>
         <br/>
         <div>
           <i class="el-icon-price-tag card-icon"></i>
-          <span><a v-for="(item,index) in article.contentTag" :key="index" class="card-tag">{{ item }}</a></span>
+          <span>
+             <router-link :to="{name:'latest-tag',params:{tag:item,pageName:item}}" v-for="(item,index) in article.contentTag" :key="index">
+                <a  class="card-tag">{{ item }} </a>
+             </router-link>
+          </span>
         </div>
       </div>
     </div>
     <p class="summary">
       Kafka在美团数据平台承担着统一的数据缓存和分发的角色，随着数据量的增长，集群规模的扩大，Kafka面临的挑战也愈发严峻。本文分享了美团Kafka面临的实际挑战，以及美团针对性的一些优化工作，希望能给从事相关开发工作的同学带来帮助或启发</p>
-    <router-link :to="`/article/detail/` + article.id">
+    <router-link :to="{name:'article-detail',params:{id:article.id}}">
       <el-button type="success">阅读原文</el-button>
     </router-link>
   </section>
@@ -34,24 +38,13 @@ export default {
       require: true
     }
   },
-  data() {
-    return {
-      items: [
-        {type: '', label: '标签一'},
-        {type: 'success', label: '标签二'},
-        {type: 'info', label: '标签三'},
-        {type: 'danger', label: '标签四'},
-        {type: 'warning', label: '标签五'}
-      ]
-    }
-  },
-  methods:{
-    getAuthor(author){
+  methods: {
+    getAuthor(author) {
       let authorStr = "";
       for (const person of author) {
-        if (person.name === undefined){
+        if (person.name === undefined) {
           authorStr += person + " ";
-        }else{
+        } else {
           authorStr += person.name + " ";
         }
       }

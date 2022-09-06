@@ -1,13 +1,10 @@
 <template>
   <section class="MainItemList-Container">
-    <el-page-header @back="$router.back()" content="最新文章" style="margin-bottom: 30px"></el-page-header>
+    <el-page-header @back="$router.back()" :content="pageName" style="margin-bottom: 30px"></el-page-header>
     <ArticleCard v-for="(item,index) in appendLatestArticles" :key="index" :article="item"></ArticleCard>
-    <el-button @click="loadMore" :disabled="this.loadMoreSwitch === false" :loading="this.loadingSwitch">查看更多</el-button>
-
-    <!--    <template>-->
-    <!--      <Pagination :total="latestArticles.size" :pageNum="latestArticles.pageNum" :pageSize="latestArticles.pageSize"/>-->
-
-    <!--    </template>-->
+    <div class="more-container" v-if="this.appendLatestArticles.length > 0">
+      <el-button @click="loadMore" :disabled="this.loadMoreSwitch === false" :loading="this.loadingSwitch">浏览更多文章</el-button>
+    </div>
   </section>
 </template>
 
@@ -20,6 +17,11 @@ export default {
   name: "MainItemList",
   components: {ArticleCard},
   mounted() {
+    this.blogTag = this.$route.params.tag;
+    if (this.$route.params.pageName != null){
+      this.pageName = this.$route.params.pageName;
+    }
+    console.log(this.$route.params.author)
     this.getArticlePage();
   },
   data() {
@@ -29,15 +31,22 @@ export default {
       pageNum: 1,
       pageSize: 20,
       loadMoreSwitch: true,
-      loadingSwitch: false
+      loadingSwitch: false,
+      blogTag:'',
+      pageName:'最新文章'
     }
   },
   methods: {
     getArticlePage() {
+      console.log(this.blogTag)
       load.openLoading();
       this.$http.get(
-          'http://localhost:8842/blog/query/page', {
-            params: {pageNum: this.pageNum, pageSize: this.pageSize}
+          process.env.VUE_APP_BASE_URL + '/blog/query/page', {
+            params: {
+              pageNum: this.pageNum,
+              pageSize: this.pageSize,
+              contentTag: this.blogTag,
+            }
           }).then(function (success) {
 
         load.closeLoading();
@@ -69,6 +78,17 @@ export default {
 }
 </script>
 
-<style scoped>
-
+<style scoped lang="less">
+.more-container{
+  display: block;
+  width: inherit;
+  clear: both;
+  border-top: 1px solid rgba(0,0,0,.05);
+  padding: 10px;
+  .el-button:focus, .el-button:hover {
+    color: rgb(97, 155, 111);
+    border-color: rgb(139, 183, 151);
+    background-color: #fff;
+  }
+}
 </style>

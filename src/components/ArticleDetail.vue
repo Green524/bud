@@ -50,15 +50,16 @@ export default {
   },
   methods: {
     getArticleDetail() {
-      this.$http.get('http://localhost:8842/blog/query/' + this.articleId).then(function (success) {
+      this.$http.get(process.env.VUE_APP_BASE_URL + '/blog/query/' + this.articleId).then(function (success) {
         this.article = success.body.data;
-      }, function (error) {
-        console.log('请求失败' + error.text);
+      }, function () {
+        this.$message('获取文章失败');
       });
     },
 
     getComment() {
-      this.$http.get('http://localhost:8842/comment/get/byarticleid', {
+      console.log(process.env.VUE_APP_BASE_URL)
+      this.$http.get(process.env.VUE_APP_BASE_URL + '/comment/get/byarticleid', {
         params: {
           articleId: this.articleId,
           pageNum: this.pageNum,
@@ -68,12 +69,12 @@ export default {
         this.commentList = success.body.data.list;
         this.appendCommentList = this.appendCommentList.concat(this.commentList);
         this.commentTotal = success.body.data.total;
-      }, function (error) {
-        console.log('请求失败' + error.text);
+      }, function () {
+        this.$message('获取评论失败');
       });
     },
     doSend(text) {
-      this.$http.post('http://localhost:8842/comment/add', {
+      this.$http.post(process.env.VUE_APP_BASE_URL + '/comment/add', {
         articleId: this.articleId,
         parentId: 0,
         commenter: this.commenterText,
@@ -83,12 +84,12 @@ export default {
         if (success.body.code == 200) {
           this.getComment();
         }
-      }, function (error) {
-        console.log('请求失败' + error.text);
+      }, function () {
+
       });
     },
     doChidSend(text, targetUserId, parentId) {
-      this.$http.post('http://localhost:8842/comment/add', {
+      this.$http.post(process.env.VUE_APP_BASE_URL + '/comment/add', {
         articleId: this.articleId,
         parentId: targetUserId,
         commenter: this.commenterText,
@@ -100,8 +101,8 @@ export default {
         if (success.body.code == 200) {
           this.getComment();
         }
-      }, function (error) {
-        console.log('请求失败' + error.text);
+      }, function () {
+
       });
     },
     inputPattern() {

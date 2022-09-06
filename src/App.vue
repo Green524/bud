@@ -11,19 +11,19 @@
           <el-col>
             <el-menu
                 class="el-menu-vertical-demo"
-                :default-active="`/article/latest`"
+                default-active="/article/latest/"
                 background-color="#E9EEF3"
                 text-color="#000"
                 active-text-color="rgb(97, 155, 111)"
                 :router="true"
             >
-              <el-menu-item index="/article/latest">
+              <el-menu-item index="/article/latest/">
                 <span slot="title">最新文章</span>
               </el-menu-item>
-              <el-menu-item index="/article/archive">
+              <el-menu-item index="/article/archive/">
                 <span slot="title">文章存档</span>
               </el-menu-item>
-              <el-menu-item index="/about">
+              <el-menu-item index="/about/">
                 <span slot="title">关于我</span>
               </el-menu-item>
             </el-menu>
@@ -31,8 +31,8 @@
         </el-row>
       </el-aside>
       <el-main class="goTop">
-        <router-view>
-        </router-view>
+
+        <router-view :key="key"> </router-view>
         <template>
           <el-backtop target=".goTop" :right="40" :bottom="50"></el-backtop>
         </template>
@@ -44,7 +44,13 @@
 import MobileNav from "@/components/MobileNav";
 export default {
   name: 'App',
-  components:{MobileNav}
+  components:{MobileNav},
+  computed:{
+    // 这个key 保证每次切换组件都会重新通过生命周期
+    key () {
+      return this.$route.name !== undefined ? this.$route.name + +new Date() : this.$route + +new Date()
+    }
+  },
 }
 </script>
 
@@ -117,7 +123,6 @@ export default {
     height: 48px;
     width: 100%;
     background-color: #E9EEF3;
-
   }
 }
 </style>
