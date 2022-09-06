@@ -2,7 +2,7 @@
   <section class="MainItemList-Container">
     <el-page-header @back="$router.back()" content="最新文章" style="margin-bottom: 30px"></el-page-header>
     <ArticleCard v-for="(item,index) in appendLatestArticles" :key="index" :article="item"></ArticleCard>
-    <el-button @click="loadMore" :disabled="this.loadMoreSwitch === false" style="display: block">查看更多</el-button>
+    <el-button @click="loadMore" :disabled="this.loadMoreSwitch === false" :loading="this.loadingSwitch">查看更多</el-button>
 
     <!--    <template>-->
     <!--      <Pagination :total="latestArticles.size" :pageNum="latestArticles.pageNum" :pageSize="latestArticles.pageSize"/>-->
@@ -28,7 +28,8 @@ export default {
       appendLatestArticles:[],
       pageNum: 1,
       pageSize: 20,
-      loadMoreSwitch:true
+      loadMoreSwitch: true,
+      loadingSwitch: false
     }
   },
   methods: {
@@ -52,13 +53,15 @@ export default {
       })
     },
     loadMore() {
-      const vm = this;
+      this.loadingSwitch = true;
       this.pageNum++;
       this.getArticlePage();
+      const vm = this;
       setTimeout(function () {
         if (vm.latestArticles.length === 0) {
           vm.loadMoreSwitch = false;
           vm.$message('无更多文章');
+          vm.loadingSwitch = false;
         }
       }, 500)
     }

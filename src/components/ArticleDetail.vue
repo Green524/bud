@@ -30,8 +30,7 @@
       <el-input type="text" placeholder="你的邮箱(方便我联系你)" v-model="commenterEmailText" :change="inputPattern()"/>
       <comment :commentList=appendCommentList :commentNum=appendCommentList.length commentWidth=100% @doSend="doSend"
                @doChidSend="doChidSend" label="游客"/>
-      <el-button @click="loadMore" :disabled="this.loadMoreSwitch === false">加载更多</el-button>
-
+      <el-button @click="loadMore" :disabled="this.loadMoreSwitch === false" :loading="this.loadingSwitch">加载更多</el-button>
     </div>
   </section>
 </template>
@@ -112,13 +111,15 @@ export default {
       }
     },
     loadMore() {
-      const vm = this;
+      this.loadingSwitch = true;
       this.pageNum++;
       this.getComment();
+      const vm = this;
       setTimeout(function () {
         if (vm.commentList.length === 0) {
           vm.loadMoreSwitch = false;
           vm.$message('无更多评论');
+          vm.loadingSwitch = false;
         }
       }, 500)
     }
@@ -132,15 +133,24 @@ export default {
       commenterText: 'chenum',
       commenterEmailText: '1@123.com',
       pageNum: 1,
-      pageSize: 1,
+      pageSize: 10,
       commentTotal: 0,
-      loadMoreSwitch: true
+      loadMoreSwitch: true,
+      loadingSwitch: false
     }
   }
 }
 </script>
 
 <style scoped lang="less">
+.el-button{
+  width: 100%;
+}
+.el-button:focus, .el-button:hover {
+  color: rgb(97, 155, 111);
+  border-color: rgb(139, 183, 151);
+  background-color: #fff;
+}
 .el-input {
   display: block;
   margin-bottom: 10px;
