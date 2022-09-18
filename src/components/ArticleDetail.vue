@@ -28,8 +28,8 @@
     <div v-if="article.isComment" style="width: 80%">
       <el-input type="text" placeholder="Github用户名(用于获取头像)" v-model="commenterText"/>
       <el-input type="text" placeholder="你的邮箱(方便我联系你)" v-model="commenterEmailText" :change="inputPattern()"/>
-      <comment :commentList=appendCommentList :commentNum=appendCommentList.length commentWidth=100% @doSend="doSend"
-               @doChidSend="doChidSend" label="游客"/>
+      <comment  :commentList=commentList :commentNum=commentList.length commentWidth=100% @doSend="doSend"
+               @doChidSend="doChidSend"/>
       <el-button @click="loadMore" :disabled="this.loadMoreSwitch === false" :loading="this.loadingSwitch">加载更多</el-button>
     </div>
   </section>
@@ -58,7 +58,6 @@ export default {
     },
 
     getComment() {
-      console.log(process.env.VUE_APP_BASE_URL)
       this.$http.get(process.env.VUE_APP_BASE_URL + '/comment/get/byarticleid', {
         params: {
           articleId: this.articleId,
@@ -131,7 +130,7 @@ export default {
       article: {},
       commentList: [],
       appendCommentList: [],
-      commenterText: 'chenum',
+      commenterText: 'chenums',
       commenterEmailText: '1@123.com',
       pageNum: 1,
       pageSize: 10,

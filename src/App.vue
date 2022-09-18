@@ -46,11 +46,14 @@ export default {
   name: 'App',
   components:{MobileNav},
   computed:{
-    // 这个key 保证每次切换组件都会重新通过生命周期
+    // 这个key 保证每次切换组件都会重新通过生命周期,从而重新加载页面数据
     key () {
       return this.$route.name !== undefined ? this.$route.name + +new Date() : this.$route + +new Date()
     }
   },
+  mounted() {
+    document.title = "Bud 's blog"
+  }
 }
 </script>
 
