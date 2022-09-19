@@ -9,13 +9,13 @@
         <span>{{getAuthor(article.author) }}</span>
       </div>
 
-      <div class="detail-desc-i">
+      <div class="detail-desc-i" v-if="article.wordCount > 0">
         <i class="el-icon-document card-icon"></i>
         <span>{{ article.wordCount}}字</span>
       </div>
-      <div class="detail-desc-i">
+      <div class="detail-desc-i" v-if="article.readTime > 0">
         <i class="el-icon-alarm-clock card-icon"></i>
-        <span>23分钟阅读</span>
+        <span>{{ article.readTime}}分钟阅读</span>
       </div>
     </div>
     <div>

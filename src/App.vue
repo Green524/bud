@@ -20,12 +20,12 @@
               <el-menu-item index="/article/latest/">
                 <span slot="title">最新文章</span>
               </el-menu-item>
-              <el-menu-item index="/article/archive/">
-                <span slot="title">文章存档</span>
-              </el-menu-item>
-              <el-menu-item index="/about/">
-                <span slot="title">关于我</span>
-              </el-menu-item>
+<!--              <el-menu-item index="/article/archive/">-->
+<!--                <span slot="title">文章存档</span>-->
+<!--              </el-menu-item>-->
+<!--              <el-menu-item index="/about/">-->
+<!--                <span slot="title">关于我</span>-->
+<!--              </el-menu-item>-->
             </el-menu>
           </el-col>
         </el-row>
