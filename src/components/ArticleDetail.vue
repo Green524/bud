@@ -6,12 +6,12 @@
       <div class="detail-desc-i">
         <i class="el-icon-date card-icon"></i>
         <span style="margin-right: 2em">{{ article.createTime }}</span>
-        <span>海源 仕禄 肖恩 鸿洛 启帆 胡荣 李杰</span>
+        <span>{{getAuthor(article.author) }}</span>
       </div>
 
       <div class="detail-desc-i">
         <i class="el-icon-document card-icon"></i>
-        <span>{{ article.wordCount }}字</span>
+        <span>{{ article.wordCount}}字</span>
       </div>
       <div class="detail-desc-i">
         <i class="el-icon-alarm-clock card-icon"></i>
@@ -38,6 +38,7 @@
 <script>
 import comment from 'bright-comment';
 import 'github-markdown-css'
+import common from "@/common";
 
 export default {
   name: "ArticleDetail",
@@ -49,6 +50,9 @@ export default {
     this.appendCommentList = this.appendCommentList.concat(this.commentList);
   },
   methods: {
+    getAuthor(author) {
+      return common.getAuthor(author);
+    },
     getArticleDetail() {
       this.$http.get(process.env.VUE_APP_BASE_URL + '/blog/query/' + this.articleId).then(function (success) {
         this.article = success.body.data;
